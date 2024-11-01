@@ -103,15 +103,13 @@
     }
 
 $coffee = new Coffee("Espresso", 140.0, CoffeeType::ESPRESSO);
-
 $tea = new Tea("Green Tea", 100.0, TeaType::GREEN);
+$coffee2 = new Coffee("Ladno Espresso", 140.0, CoffeeType::ESPRESSO);
 
 $coffee->applyDiscount(20.0);  // Apply a discount
-
 $order = new Order();
-
 $order->addItem($coffee, 2);  // 2 espresso
-
+$order->addItem($coffee2, 2);  // 2 espresso
 $order->addItem($tea, 1);     // 1 green tea
-
 echo "Total order amount: " . $order->calculateOrderTotal() . " MKD";
+print_r($order);
