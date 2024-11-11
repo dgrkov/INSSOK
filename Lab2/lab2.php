@@ -13,11 +13,10 @@
     }
 
     trait Discountable {
-        public function applyDiscount($amount)
-        {
+        public function applyDiscount($amount) {
             $this->price -= $amount;
             if ($this->price < 0) {
-                $this->price = 0; // Ensure price does not go below zero
+                $this->price = 0;
             }
         }
     }
@@ -61,9 +60,7 @@
 
     class Tea extends Beverage {
         use Discountable;
-
         private TeaType $type;
-
         public function __construct($name, $price, TeaType $type) {
             parent::__construct($name, $price);
             $this->type = $type;
@@ -72,16 +69,25 @@
         public function calculateTotalPrice($quantity) {
             return $this->price * $quantity;
         }
-
         public function getType(): TeaType {
             return $this->type;
         }
+        public function getName() {
+            return $this->name;
+        }
+
+
     }
 
-    class Order
-    {
+    class Order {
+        /** @var Beverage[] */
         private array $items = [];
 
+        /**
+         * @param Beverage $beverage
+         * @param int $quantity
+         * @return void
+         */
         public function addItem(Beverage $beverage, int $quantity): void
         {
             $this->items[] = [
@@ -107,9 +113,12 @@ $tea = new Tea("Green Tea", 100.0, TeaType::GREEN);
 $coffee2 = new Coffee("Ladno Espresso", 140.0, CoffeeType::ESPRESSO);
 
 $coffee->applyDiscount(20.0);  // Apply a discount
+
 $order = new Order();
 $order->addItem($coffee, 2);  // 2 espresso
 $order->addItem($coffee2, 2);  // 2 espresso
 $order->addItem($tea, 1);     // 1 green tea
+
 echo "Total order amount: " . $order->calculateOrderTotal() . " MKD";
+
 print_r($order);
